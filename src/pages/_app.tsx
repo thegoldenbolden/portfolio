@@ -1,16 +1,11 @@
 import type { AppProps } from "next/app";
-import "../styles/globals.scss";
 import { Analytics } from "@vercel/analytics/react";
-import { Raleway } from "@next/font/google";
-
-const raleway = Raleway({
- weight: ["400", "700"],
- subsets: ["latin"],
-});
+import { montserrat } from "@lib/fonts";
+import "../app/globals.css";
 
 function App({ Component, pageProps }: AppProps) {
  return (
-  <div className={raleway.className}>
+  <div className={`${montserrat.variable} bg-tw-black text-tw-white`}>
    <Component {...pageProps} />
    <Analytics />
   </div>
