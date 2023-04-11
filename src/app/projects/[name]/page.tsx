@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Params) {
 export default async function Page({ params }: Params) {
  const project = await getRepo(params.name);
 
- if (!project) {
-  notFound();
+ if (!project?.name) {
+  return notFound();
  }
 
  const summary = descriptions[project.name];
