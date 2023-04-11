@@ -121,9 +121,13 @@ function Search() {
     setData({ status: "success", tracks: data.tracks });
    } catch (error) {
     console.error(error);
-    setData({ status: "error", error: error?.message ?? "An error occurred" });
+    const message =
+     error.status === 401
+      ? "Try logging in again?"
+      : error.message ?? "An error occurred";
+    setData({ status: "error", error: message });
    }
-  }, 500);
+  }, 1000);
  }, []);
 
  useEffect(() => {

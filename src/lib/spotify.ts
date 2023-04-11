@@ -35,12 +35,7 @@ export async function searchTracks(
   headers: { Authorization: `Bearer ${token}` },
  });
 
- if (!response.ok) {
-  if (response.status === 401) {
-   throw new Error("Try logging in again?");
-  }
-  throw new Error("Failed to fetch");
- }
+ if (!response.ok) throw response;
 
  return response.json();
 }

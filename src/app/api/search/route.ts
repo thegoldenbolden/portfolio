@@ -23,7 +23,7 @@ export async function GET(request: Request) {
  } catch (error) {
   console.error(error);
   return NextResponse.json(error?.message ?? "An error occurred.", {
-   status: error.status ?? 400,
+   status: error.status ?? 500,
   });
  }
 }
