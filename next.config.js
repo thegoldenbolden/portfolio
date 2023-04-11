@@ -1,11 +1,26 @@
 /** @type {import("next").NextConfig} */
-const path = require("path");
 
 const nextConfig = {
  reactStrictMode: true,
  swcMinify: true,
- sassOptions: {
-  includePaths: [path.join(__dirname, "styles")],
+ experimental: {
+  appDir: true,
+ },
+ images: {
+  formats: ["image/avif", "image/webp"],
+  remotePatterns: [
+   {
+    protocol: "https",
+    hostname: "i.scdn.co",
+    pathname: "/**",
+   },
+   {
+    protocol: "https",
+    hostname: "avatars.githubusercontent.com",
+    pathname: "/**",
+   },
+  ],
  },
 };
+
 module.exports = nextConfig;
