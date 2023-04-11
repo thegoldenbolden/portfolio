@@ -18,7 +18,7 @@ export default async function Page() {
     <div className="flex flex-row gap-6 items-center">
      {profile?.avatar_url && (
       <Image
-       className="object-contain p-2 bg-gradient-to-r from-tw-primary to-tw-secondary rounded-full"
+       className="object-contain p-[4px] bg-tw-gray-10 hover:bg-tw-gray transition-colors rounded-full"
        src={profile.avatar_url}
        alt="jacob's profile picture"
        height={96}

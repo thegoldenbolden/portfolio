@@ -41,11 +41,7 @@ export default async function Page() {
     }`}
    >
     {!session ? null : <Form />}
-    <Suspense
-     fallback={
-      <div className="w-full h-16 motion-safe:animate-pulse bg-tw-gray" />
-     }
-    >
+    <Suspense fallback={<span>Loading recommendations..</span>}>
      {/** @ts-expect-error Server Component */}
      <Recommendations user={session?.user} />
     </Suspense>
