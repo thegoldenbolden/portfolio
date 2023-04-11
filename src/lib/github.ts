@@ -1,5 +1,5 @@
 const requestInit: RequestInit = {
- next: { revalidate: 604800 },
+ next: { revalidate: 259200 },
 };
 
 type Repository = {
@@ -31,9 +31,9 @@ export async function getProfile(): Promise<User | null> {
  try {
   const response = await fetch(GITHUB_PROFILE, requestInit);
   if (!response.ok) throw new Error("Failed to fetch");
-  if (response.status > 299 || response.status < 200)
+  if (response.status > 299 || response.status < 200) {
    throw new Error(response.statusText);
-  console.log({ getProfile: response.headers.get("date") });
+  }
   return response.json();
  } catch (error) {
   console.error(error);
@@ -45,9 +45,9 @@ export async function getRepos(): Promise<Repository[] | null> {
  try {
   const response = await fetch(GITHUB_REPOS, requestInit);
   if (!response.ok) throw new Error("Failed to fetch");
-  if (response.status > 299 || response.status < 200)
+  if (response.status > 299 || response.status < 200) {
    throw new Error(response.statusText);
-  console.log({ getRepos: response.headers.get("date") });
+  }
   return response.json();
  } catch (error) {
   console.error(error);
@@ -59,9 +59,9 @@ export async function getRepo(repo: string): Promise<Repository | null> {
  try {
   const response = await fetch(getGithubRepo(repo), requestInit);
   if (!response.ok) throw new Error("Failed to fetch");
-  if (response.status > 299 || response.status < 200)
+  if (response.status > 299 || response.status < 200) {
    throw new Error(response.statusText);
-  console.log({ getRepo: response.headers.get("date"), repo });
+  }
   return response.json();
  } catch (error) {
   console.error(error);

@@ -3,15 +3,6 @@ export const SEARCH_API = `${SPOTIFY_API}/search?limit=5&type=track`;
 export const SPOTIFY_USER = "https://open.spotify.com/user";
 export const SPOTIFY_TRACK = "https://open.spotify.com/track";
 
-type ExternalURL = { spotify: string };
-type Artist = { id: string; name: string; external_urls: ExternalURL };
-
-type Image = {
- url: string;
- height: number;
- width: number;
-};
-
 export type Track = {
  id: string;
  name: string;
@@ -20,13 +11,17 @@ export type Track = {
  external_urls: ExternalURL;
 };
 
+type Response = { tracks: { items: Track[] } };
+type ExternalURL = { spotify: string };
+type Artist = { id: string; name: string; external_urls: ExternalURL };
+type Image = { url: string; height: number; width: number };
+
 type Album = {
  name: string;
  images: Image[];
  external_urls: ExternalURL;
 };
 
-type Response = { tracks: { items: Track[] } };
 export async function searchTracks(
  title: string,
  token?: string
@@ -44,17 +39,8 @@ export async function searchTracks(
   if (response.status === 401) {
    throw new Error("Try logging in again?");
   }
-
   throw new Error("Failed to fetch");
  }
-
- console.log({
-  date: response.headers.get("date"),
-  q: title,
-  token,
-  url: response.url,
-  a: url.href,
- });
 
  return response.json();
 }

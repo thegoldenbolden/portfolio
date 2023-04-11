@@ -1,5 +1,6 @@
 import type { Session } from "next-auth";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 
 import { LoginButton, LogoutButton } from "@components/buttons/auth";
@@ -8,7 +9,6 @@ import { getRecommendations } from "@lib/prisma";
 import DeleteButton from "./delete-button";
 import getUser from "@lib/get-user";
 import Form from "./form";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
  title: "Collab",

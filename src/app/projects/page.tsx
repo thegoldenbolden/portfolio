@@ -15,9 +15,7 @@ export const metadata: Metadata = {
  description: "A list of projects I've worked on",
 };
 
-// Every 3 days
 export const revalidate = 259200;
-
 export default async function Page() {
  const projects = await getRepos();
 
