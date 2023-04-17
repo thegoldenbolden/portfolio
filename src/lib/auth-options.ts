@@ -1,5 +1,5 @@
 import type { JWT } from "next-auth/jwt/types";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 
 const scopes = "user-library-modify";
@@ -86,4 +86,4 @@ export const authOptions: NextAuthOptions = {
  },
 };
 
-export default NextAuth(authOptions);
+export default authOptions;

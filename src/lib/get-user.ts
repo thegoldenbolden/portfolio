@@ -1,4 +1,4 @@
-import { authOptions } from "@auth";
+import { authOptions } from "./auth-options";
 import { getServerSession } from "next-auth";
 import { cache } from "react";
 
