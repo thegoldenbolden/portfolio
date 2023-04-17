@@ -21,21 +21,3 @@ type Album = {
  images: Image[];
  external_urls: ExternalURL;
 };
-
-export async function searchTracks(
- title: string,
- token?: string
-): Promise<Response> {
- if (!token) throw new Error("No token provided");
- const url = new URL(SEARCH_API);
- url.searchParams.set("q", title);
-
- const response = await fetch(url, {
-  method: "GET",
-  headers: { Authorization: `Bearer ${token}` },
- });
-
- if (!response.ok) throw response;
-
- return response.json();
-}
