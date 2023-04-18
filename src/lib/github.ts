@@ -1,4 +1,5 @@
 const requestInit: RequestInit = {
+ headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
  next: { revalidate: 86400 },
 };
 
@@ -15,31 +16,10 @@ type Repository = {
  topics: string[];
 };
 
-type User = {
- avatar_url: string;
- html_url: string;
- public_repos: number;
-};
-
 export const GITHUB_API = "https://api.github.com";
-export const GITHUB_PROFILE = GITHUB_API + "/users/thegoldenbolden";
-export const GITHUB_REPOS = `${GITHUB_PROFILE}/repos?type=all&sort=pushed&direction=desc`;
+export const GITHUB_REPOS = `${GITHUB_API}/users/thegoldenbolden/repos?type=all&sort=pushed&direction=desc`;
 export const getGithubRepo = (repo: string) =>
  `${GITHUB_API}/repos/thegoldenbolden/${repo}`;
-
-export async function getProfile(): Promise<User | null> {
- try {
-  const response = await fetch(GITHUB_PROFILE, requestInit);
-  if (!response.ok) throw new Error("Failed to fetch");
-  if (response.status > 299 || response.status < 200) {
-   throw new Error(response.statusText);
-  }
-  return response.json();
- } catch (error) {
-  console.error(error);
-  return null;
- }
-}
 
 export async function getRepos(): Promise<Repository[] | null> {
  try {
