@@ -2,15 +2,27 @@
 
 import { useEffect } from "react";
 
-export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+export default function Error({
+ error,
+ reset,
+}: {
+ error: Error;
+ reset: () => void;
+}) {
  useEffect(() => {
   console.error(error);
  }, [error]);
 
  return (
-  <div>
+  <div className="space-y-2">
    <h2>Something went wrong</h2>
-   <button onClick={() => reset()}>Try again?</button>
+   <button
+    aria-label="try again?"
+    className="hover:underline focus-visible:underline"
+    onClick={() => reset()}
+   >
+    Try again?
+   </button>
   </div>
  );
 }

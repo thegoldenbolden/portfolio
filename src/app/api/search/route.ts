@@ -16,7 +16,7 @@ export async function GET(request: Request) {
    );
   }
 
-  if (!session.accessToken) {
+  if (!session.access_token) {
    return NextResponse.json(
     { message: "No session token available" },
     { status: 401 }
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
   const response = await fetch(url, {
    method: "GET",
-   headers: { Authorization: `Bearer ${session.accessToken}` },
+   headers: { Authorization: `Bearer ${session.access_token}` },
   });
 
   if (!response.ok) throw response;

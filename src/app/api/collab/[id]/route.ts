@@ -1,13 +1,16 @@
-import { NextResponse } from "next/server";
 import { deleteRecommendation } from "@lib/prisma";
 
 type Params = { params: { id: string } };
-export async function DELETE(request: Request, { params }: Params) {
+export async function DELETE(_: Request, { params }: Params) {
  try {
   await deleteRecommendation(params.id);
-  return NextResponse.json({ success: true }, { status: 202 });
+  return new Response(null, { status: 202 });
  } catch (error) {
-  console.error(error);
-  return NextResponse.json({ success: false }, { status: 500 });
+  console.error("Error deleting recommendation", error);
+  if (error.message === "Unauthorized") {
+   return new Response(null, { status: 401 });
+  }
+
+  return new Response(null, { status: 500 });
  }
 }

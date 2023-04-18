@@ -1,5 +1,5 @@
 const requestInit: RequestInit = {
- next: { revalidate: 259200 },
+ next: { revalidate: 86400 },
 };
 
 type Repository = {

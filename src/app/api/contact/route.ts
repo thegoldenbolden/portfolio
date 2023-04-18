@@ -6,7 +6,8 @@ export async function POST(request: Request) {
  const { email, subject, message, name } = body;
 
  try {
-  if (!email || !name || !message) throw new Error(`An email, name, and message must be provided.`);
+  if (!email || !name || !message)
+   throw new Error(`An email, name, and message must be provided.`);
 
   mail.setApiKey(process.env.SENDGRID_KEY);
   await mail.send({

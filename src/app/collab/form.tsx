@@ -1,38 +1,28 @@
 "use client";
-import type { Track } from "@lib/spotify";
-
-import { ChevronDownIcon, ThumbsUpIcon } from "@components/icons";
-import { Transition, Combobox } from "@headlessui/react";
+import type { Status } from "../../types";
+import { type FormEventHandler, useState, useTransition } from "react";
+import { ThumbsUpIcon } from "@components/icons";
+import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import NextLink from "next/link";
-import Image from "next/image";
-import {
- type FormEventHandler,
- Fragment,
- useCallback,
- useEffect,
- useRef,
- useState,
- useTransition,
-} from "react";
+import SearchTracks from "./search-tracks";
+import dynamic from "next/dynamic";
 
-type Response =
- | { status: "success"; tracks: Track[] }
- | { status: "error"; error: string }
- | { status: "loading" };
+const Toast = dynamic(() => import("@components/toast"));
 
 export default function Form() {
  const router = useRouter();
- const [pending, startTransition] = useTransition();
- const [fetching, setFetching] = useState(false);
- const mutating = fetching || pending;
+ const [isPending, startTransition] = useTransition();
+ const [status, setStatus] = useState<Status>(null);
+ const isMutating = status === "loading" || isPending;
 
  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
   e.preventDefault();
-  const form = new FormData(e.currentTarget);
+  if (isMutating) return;
+  const el = e.currentTarget;
+  const form = new FormData(el);
 
   try {
-   setFetching(true);
+   setStatus("loading");
    const response = await fetch("/api/collab", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -46,17 +36,18 @@ export default function Form() {
 
    if (!response.ok) throw new Error("Failed to fetch");
    if (response.status !== 201) throw new Error(response.statusText);
+   setStatus("success");
+   el.reset();
    startTransition(() => router.refresh());
   } catch (error) {
-   console.error(error);
-  } finally {
-   setFetching(false);
+   setStatus("error");
   }
  };
 
  return (
   <div className="sm:order-last">
    <form
+    style={{ opacity: isMutating ? 0.7 : 1 }}
     onSubmit={handleSubmit}
     className="flex flex-col gap-2 sm:sticky sm:top-6"
    >
@@ -67,157 +58,53 @@ export default function Form() {
        type="checkbox"
        id="anonymous"
        name="anonymous"
+       disabled={isMutating}
       />
       <label htmlFor="anonymous">Anonymous</label>
      </div>
      <button
       type="submit"
-      className="flex items-center gap-2 text-tw-secondary hover:text-tw-primary focus:text-tw-primary"
-      disabled={mutating}
+      className="flex items-center gap-2 text-tw-secondary hover:text-tw-black focus-visible:text-tw-black dark:hover:text-tw-primary dark:focus-visible:text-tw-primary"
+      disabled={isMutating}
      >
       <ThumbsUpIcon className="w-4 h-4 text-inherit" />
       Recommend
      </button>
     </div>
-    <Search />
-    <div className="flex gap-2 bg-tw-gray-10 rounded-md">
+    <SearchTracks />
+    <div className="flex gap-2 text-tw-black bg-tw-black/10 dark:text-tw-white dark:bg-tw-gray-10 rounded-md">
      <label htmlFor="content" className="sr-only">
       Add a comment
      </label>
      <input
-      className="bg-transparent outline-none text-sm p-2 text-tw-white grow"
+      className="placeholder:text-tw-gray rounded-md border-none py-2 px-3 text-sm leading-5 bg-transparent w-full"
       id="content"
       maxLength={140}
+      disabled={isMutating}
       name="content"
+      autoComplete="off"
       placeholder="Type message"
      />
-     <button
-      type="submit"
-      className="flex bg-tw-secondary my-px rounded-md px-6 text-sm items-center gap-2 text-tw-gray-10 hover:bg-tw-secondary"
-      disabled={mutating}
-     >
-      Send
-     </button>
     </div>
+    <button
+     type="submit"
+     className="bg-tw-secondary p-2 flex items-center justify-center gap-2 rounded-md text-sm text-tw-gray-10 hover:bg-tw-primary focus-visible:bg-tw-primary"
+     disabled={isMutating}
+    >
+     <ThumbsUpIcon className="h-5 w-5" />
+     <span>{isMutating ? "Recommending.." : "Recommend"}</span>
+    </button>
    </form>
-   <div />
+   <AnimatePresence>
+    {(status === "error" || status === "success") && (
+     <Toast
+      setStatus={setStatus}
+      status={status}
+      success="Thanks for the recommendation!"
+      error="Oops, unable to post recommendation."
+     />
+    )}
+   </AnimatePresence>
   </div>
- );
-}
-
-function Search() {
- const [query, setQuery] = useState("");
- const [data, setData] = useState<Response | null>();
- const timeoutRef = useRef<any>(null);
-
- const debouncedSearch = useCallback((value: string) => {
-  clearTimeout(timeoutRef.current);
-  timeoutRef.current = setTimeout(async () => {
-   try {
-    setData({ status: "loading" });
-    const response = await fetch(`/api/search?q=${value}`, { method: "GET" });
-    if (!response.ok) throw new Error("Failed to fetch");
-    const data: { tracks: Track[] } = await response.json();
-    setData({ status: "success", tracks: data.tracks });
-   } catch (error) {
-    console.error(error);
-    const message =
-     error.status === 401
-      ? "Try logging in again?"
-      : error.message ?? "An error occurred";
-    setData({ status: "error", error: message });
-   }
-  }, 1000);
- }, []);
-
- useEffect(() => {
-  query.length ? debouncedSearch(query) : setData(null);
-  return () => clearTimeout(timeoutRef.current);
- }, [query, debouncedSearch]);
-
- return (
-  <>
-   <div className="w-full">
-    <Combobox name="track">
-     <div className="relative">
-      <div className="relative w-full overflow-hidden rounded-md">
-       <Combobox.Input
-        autoComplete="off"
-        placeholder="Search tracks"
-        className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-tw-gray-10 text-tw-white"
-        displayValue={(track: Track) => track.name}
-        onChange={(e) => setQuery(e.target.value)}
-       />
-       <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-        <ChevronDownIcon className="h-5 w-5 text-tw-gray" aria-hidden="true" />
-       </Combobox.Button>
-      </div>
-      {data && (
-       <Transition
-        as={Fragment}
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        afterLeave={() => setQuery("")}
-       >
-        <Combobox.Options className="absolute backdrop-blur-md mt-1 w-full overflow-hidden rounded-md focus:outline-none">
-         {data.status === "loading" ? (
-          <div className="relative p-2 text-tw-white">Loading tracks..</div>
-         ) : data.status === "error" ? (
-          <div className="relative p-2 text-tw-white">{data.error}</div>
-         ) : !data.tracks.length ? (
-          <div className="relative p-2 text-tw-white">No tracks found.</div>
-         ) : (
-          data.tracks.map((track) => (
-           <Combobox.Option
-            key={track.id}
-            className="relative p-2 text-gray-900"
-            value={{ name: track.name, id: track.id }}
-           >
-            <div className="flex items-center gap-2">
-             {track.album.images?.[0] && (
-              <Image
-               src={track.album.images[0].url}
-               alt={`album ${track.album.name} cover image`}
-               height={48}
-               width={48}
-               className="aspect-square text-tw-white rounded-md object-cover"
-              />
-             )}
-             <div className="flex flex-col gap-px truncate">
-              <NextLink
-               target="_blank"
-               rel="noreferrer noopener"
-               href={track.external_urls.spotify}
-               className="text-tw-white text-ellipsis overflow-hidden hover:underline focus:underline"
-              >
-               {track.name}
-              </NextLink>
-              <div className="text-sm text-ellipsis overflow-hidden text-tw-gray">
-               {track.artists.map((artist, i) => (
-                <Fragment key={artist.id}>
-                 <NextLink
-                  href={artist.external_urls.spotify}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                 >
-                  {artist.name}
-                 </NextLink>
-                 {track.artists[i + 1] ? <>{", "}</> : null}
-                </Fragment>
-               ))}
-              </div>
-             </div>
-            </div>
-           </Combobox.Option>
-          ))
-         )}
-        </Combobox.Options>
-       </Transition>
-      )}
-     </div>
-    </Combobox>
-   </div>
-  </>
  );
 }

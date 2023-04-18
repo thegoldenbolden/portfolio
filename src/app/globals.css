@@ -1,3 +1,13 @@
 @tailwind components;
 @tailwind base;
 @tailwind utilities;
+
+@layer base {
+	:disabled {
+ cursor: not-allowed;
+	}
+
+	button[disabled=true] {
+		background-color: theme("colors.tw-gray-10")
+	}
+}

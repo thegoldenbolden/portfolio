@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, type Recommendation } from "@prisma/client";
 import getUser from "./get-user";
 
 declare global {
@@ -18,6 +18,7 @@ type Body = {
  content?: string;
 };
 
+// Username used as id since Spotify username cannot be changed.
 export async function createRecommendation(body: Body) {
  const session = await getUser();
  if (!session?.user?.name) throw new Error("Unauthorized");

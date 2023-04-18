@@ -6,7 +6,7 @@ import { FlameIcon } from "@components/icons";
 import { getRepos } from "@lib/github";
 
 const featured = {
- pokebinder: 1,
+ pokefolder: 1,
  versus: 1,
 };
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
  description: "A list of projects I've worked on",
 };
 
-export const revalidate = 259200;
+export const revalidate = 86400;
 export default async function Page() {
  const projects = await getRepos();
 
@@ -31,7 +31,6 @@ export default async function Page() {
   <ul className="flex flex-col mt-2 gap-2 pb-6">
    {sortByFeatured.map((project) => {
     const name = project.name.toLowerCase();
-
     return (
      <li key={project.name} className="flex flex-col gap-px">
       <div className="flex flex-wrap gap-2 items-center">

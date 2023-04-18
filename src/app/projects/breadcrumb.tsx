@@ -10,8 +10,8 @@ export default function Breadcrumb() {
     href="/projects"
     className={
      segment
-      ? "text-tw-gray hover:text-tw-white focus:text-tw-white"
-      : "text-tw-white"
+      ? "text-tw-gray hover:text-tw-black focus:text-tw-black dark:hover:text-tw-white dark:focus:text-tw-white"
+      : "text-tw-black dark:text-tw-white"
     }
    >
     Projects

@@ -1,10 +1,10 @@
 // Maybe change this to each projects READMEs?
 
 const descriptions: { [key: string]: string } = {
- pokebinder:
-  "PokéBinder is a web application designed to be a one-stop shop for all things related to Pokémon cards. " +
+ pokefolder:
+  "Pokefolder is a web application designed to be a one-stop shop for all things related to Pokémon cards. " +
   "Whether you're a seasoned collector or just starting out, you'll find everything you need here to discover, buy, and sell Pokémon cards.\n\n" +
-  "With PokéBinder, you can easily search for specific Pokémon cards using a variety of filters, such as card type, Pokémon type, and expansion set. " +
+  "With Pokefolder, you can easily search for specific Pokémon cards using a variety of filters, such as card type, Pokémon type, and expansion set. " +
   "You'll also be able to see detailed information about each card, including its rarity, value, and artwork.\n\n" +
   "The site is built using Next, React, and TypeScript. Finally, I used Sass to help write cleaner, more organized styles for the application.",
  versus:
