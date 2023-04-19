@@ -39,20 +39,10 @@ export default function Form() {
 
  return (
   <>
-   <AnimatePresence>
-    {(status === "success" || status === "error") && (
-     <Toast
-      status={status}
-      success="Thanks for messaging!"
-      error="Oh no.. an error.."
-      setStatus={setStatus}
-     />
-    )}
-   </AnimatePresence>
    <form
     style={{ opacity: isMutating ? 0.7 : 1 }}
     onSubmit={handleSubmit}
-    className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-2 w-[480px] max-w-full"
+    className="mt-8 grid grid-cols-1 w-[480px] max-w-full sm:grid-cols-2 gap-2"
    >
     <div className="flex flex-col gap-2">
      <label htmlFor="name">Name</label>
@@ -64,7 +54,7 @@ export default function Form() {
       autoComplete="off"
       disabled={isMutating}
       placeholder="John Doe"
-      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-sm p-2 bg-tw-black/10 dark:bg-tw-white/10"
+      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10"
      />
     </div>
     <div className="flex flex-col gap-2">
@@ -76,7 +66,7 @@ export default function Form() {
       type="email"
       disabled={isMutating}
       placeholder="johndoe@gmail.com"
-      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-sm p-2 bg-tw-black/10 dark:bg-tw-white/10"
+      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10"
      />
     </div>
     <div className="flex flex-col gap-2 sm:col-span-2">
@@ -90,7 +80,7 @@ export default function Form() {
       disabled={isMutating}
       minLength={2}
       placeholder="Subject"
-      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-sm p-2 bg-tw-black/10 dark:bg-tw-white/10"
+      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10"
      />
     </div>
     <div className="flex flex-col gap-2 sm:col-span-2">
@@ -102,17 +92,27 @@ export default function Form() {
       minLength={2}
       disabled={isMutating}
       placeholder="Message"
-      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-sm p-2 bg-tw-black/10 dark:bg-tw-white/10 min-h-[100px]"
+      className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10 min-h-[100px]"
      />
     </div>
     <button
      disabled={isMutating}
      type="submit"
-     className="bg-tw-secondary w-full justify-self-end text-tw-black rounded-sm px-3 py-2"
+     className="bg-tw-secondary w-full justify-self-end text-tw-black rounded-md px-3 py-2"
     >
      {isMutating ? "Sending.." : "Send message!"}
     </button>
    </form>
+   <AnimatePresence>
+    {(status === "success" || status === "error") && (
+     <Toast
+      status={status}
+      success="Thanks for messaging!"
+      error="Oh no.. an error.."
+      setStatus={setStatus}
+     />
+    )}
+   </AnimatePresence>
   </>
  );
 }

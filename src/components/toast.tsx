@@ -25,14 +25,15 @@ export default function Toast({ status, success, error, setStatus }: Toast) {
 
  return (
   <motion.div
+   initial={{ x: "-100%" }}
    animate={{
     opacity: 1,
     decelerate: 2,
-    speed: "0.1",
-    x: "calc(100vw - 100%)",
+    speed: 1,
+    x: 0,
    }}
-   exit={{ x: "100vw", speed: "0.1", opacity: 0 }}
-   className={`fixed top-4 right-2 flex flex-wrap items-center text-center justify-center gap-2 rounded-sm left-0 ${bgColor} ${color} max-w-[90%] w-prose break-words px-6 py-2`}
+   exit={{ x: "100%", speed: 1, opacity: 0 }}
+   className={`fixed top-6 flex flex-wrap items-center text-center justify-center gap-2 rounded-md sm:right-6 ${bgColor} ${color} w-full max-w-[90%] sm:max-w-max p-2`}
   >
    <span>{message}</span>
   </motion.div>
