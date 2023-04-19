@@ -24,7 +24,7 @@ export const getGithubRepo = (repo: string) =>
 export async function getRepos(): Promise<Repository[] | null> {
  try {
   const response = await fetch(GITHUB_REPOS, requestInit);
-  if (!response.ok) throw new Error("Failed to fetch");
+  if (!response.ok) throw response;
   if (response.status > 299 || response.status < 200) {
    throw new Error(response.statusText);
   }
@@ -38,7 +38,7 @@ export async function getRepos(): Promise<Repository[] | null> {
 export async function getRepo(repo: string): Promise<Repository | null> {
  try {
   const response = await fetch(getGithubRepo(repo), requestInit);
-  if (!response.ok) throw new Error("Failed to fetch");
+  if (!response.ok) throw response;
   if (response.status > 299 || response.status < 200) {
    throw new Error(response.statusText);
   }
