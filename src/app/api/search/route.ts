@@ -41,6 +41,8 @@ export async function GET(request: Request) {
    );
   }
  } catch (error) {
+  console.error(error.name, error);
+
   if (error.status === 401) {
    return NextResponse.json(
     { message: "Try signing in again?" },
@@ -48,7 +50,6 @@ export async function GET(request: Request) {
    );
   }
 
-  console.error("Error: /api/search -", error);
   return NextResponse.json(
    { message: error.message ?? "An error occurred." },
    { status: error.status ?? 500 }
