@@ -42,7 +42,7 @@ export default function RootLayout({
  return (
   <html lang="en" className={montserrat.variable}>
    <body className="bg-tw-white dark:bg-tw-black font-montserrat">
-    <div className="flex flex-col sm:flex-row relative px-6 sm:px-2 gap-12 pt-32 pb-6 max-w-screen-md mx-auto text-tw-black dark:text-tw-white">
+    <div className="flex flex-col relative sm:flex-row relative px-6 sm:px-2 gap-12 pt-32 pb-6 max-w-screen-md mx-auto text-tw-black dark:text-tw-white">
      <Navbar />
      <main className="grow">{children}</main>
     </div>
