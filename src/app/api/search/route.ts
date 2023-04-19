@@ -9,7 +9,10 @@ export async function GET(request: Request) {
 
  try {
   const session = await getUser();
+  console.log(session);
+
   if (!session) {
+   console.log("No sesssion");
    return NextResponse.json(
     { message: "You must be signed in to search for songs." },
     { status: 401 }
@@ -17,8 +20,9 @@ export async function GET(request: Request) {
   }
 
   if (!session.access_token) {
+   console.log("No access token");
    return NextResponse.json(
-    { message: "No session token available" },
+    { message: "No access token available" },
     { status: 401 }
    );
   }
