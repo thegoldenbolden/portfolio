@@ -1,3 +1,4 @@
+import type { Session } from "next-auth";
 import { PrismaClient, type Recommendation } from "@prisma/client";
 import getUser from "./get-user";
 
@@ -19,18 +20,16 @@ type Body = {
 };
 
 // Username used as id since Spotify username cannot be changed.
-export async function createRecommendation(body: Body) {
- const session = await getUser();
- if (!session?.user?.name) throw new Error("Unauthorized");
-
+export async function createRecommendation(user: Session["user"], body: Body) {
+ if (!user.name) throw Error("No username");
  return prisma.recommendation.create({
   data: {
    user: {
     connectOrCreate: {
-     where: { username: session.user.name },
+     where: { username: user.name },
      create: {
-      avatar: session.user.image,
-      username: session.user.name,
+      avatar: user.image,
+      username: user.name,
      },
     },
    },
@@ -57,15 +56,8 @@ export async function getRecommendations() {
  });
 }
 
-export async function deleteRecommendation(id: string) {
- const session = await getUser();
- if (!session?.user?.name) throw new Error("Unauthorized");
+export async function deleteRecommendation(username: string, id: string) {
  return prisma.recommendation.delete({
-  where: {
-   username_id: {
-    id,
-    username: session.user.name,
-   },
-  },
+  where: { username_id: { id, username } },
  });
 }
