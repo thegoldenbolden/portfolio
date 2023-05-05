@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
 
   try {
     const session = await getUser();
-
     if (!session?.access_token) {
       return NextResponse.json(
         { message: 'Invalid access token' },
@@ -38,7 +37,6 @@ export async function GET(request: NextRequest) {
     }
   } catch (error) {
     console.error('TrackSearchError', error);
-
     if (error.status === 401) {
       return NextResponse.json(
         { message: 'Try signing in again?' },

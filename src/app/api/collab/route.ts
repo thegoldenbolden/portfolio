@@ -2,6 +2,8 @@ import { Prisma } from '@prisma/client';
 import { createRecommendation, type Body } from '@lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import getUser from '@lib/get-user';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@auth';
 
 export async function POST(request: NextRequest) {
   const body: Body = await request.json();
