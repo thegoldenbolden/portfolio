@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { SEARCH_API } from '@lib/spotify';
 import getUser from '@lib/get-user';
+import { authOptions } from '@auth';
+import { getServerSession } from 'next-auth';
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -10,7 +12,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const session = await getUser();
+    // const session = await getUser();
+    const session = await getServerSession(authOptions);
+
+    console.log(session);
 
     if (!session?.access_token) {
       return NextResponse.json(

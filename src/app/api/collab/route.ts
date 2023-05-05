@@ -19,13 +19,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const session = await getServerSession(authOptions);
-    console.log(session);
-    if (!session) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    }
-    // const session = await getUser();
-    // if (!session) throw session;
+    const session = await getUser();
+    if (!session) throw session;
     await createRecommendation(session?.user, body);
     return NextResponse.json(
       { message: 'Recommendation created' },
