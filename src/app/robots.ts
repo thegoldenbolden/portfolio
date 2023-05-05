@@ -1,7 +1,9 @@
-export default function robots() {
- return {
-  sitemap: "https://jacobbolden.com/sitemap.xml",
-  host: "https://jacobbolden.com",
-  rules: [{ userAgent: "*" }, { userAgent: "*", disallow: ["/error/"] }],
- };
+import { MetadataRoute } from 'next';
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    sitemap: 'https://jacobbolden.com/sitemap.xml',
+    host: 'https://jacobbolden.com',
+    rules: [{ userAgent: '*' }, { userAgent: '*', disallow: ['/error/'] }],
+  };
 }

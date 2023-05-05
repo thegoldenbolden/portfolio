@@ -1,26 +1,26 @@
-import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import getUser from "@lib/get-user";
-import { LoginButton } from "@components/buttons/auth";
+import getUser from '@lib/get-user';
+import { LoginButton } from '@components/buttons/auth';
 
 export const metadata: Metadata = {
- title: "Login",
- description: "Help me discover music by logging in to Spotify",
+  title: 'Login',
+  description: 'Help me discover music by logging in to Spotify',
 };
 
 export default async function Page() {
- const session = await getUser();
+  const session = await getUser();
 
- if (session) {
-  redirect("/logout");
- }
+  if (session) {
+    redirect('/logout');
+  }
 
- return (
-  <>
-   <h1 className="text-2xl">Login to Spotify</h1>
-   <p className="mb-6">Help me discover more music</p>
-   <LoginButton />
-  </>
- );
+  return (
+    <>
+      <h1 className="text-2xl">Login to Spotify</h1>
+      <p className="mb-6">Help me discover more music</p>
+      <LoginButton />
+    </>
+  );
 }

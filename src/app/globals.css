@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 @layer base {
-	:disabled {
- cursor: not-allowed;
-	}
+  :disabled {
+    cursor: not-allowed;
+  }
 
-	button[disabled=true] {
-		background-color: theme("colors.tw-gray-10")
-	}
+  button[disabled='true'] {
+    background-color: theme('colors.tw-gray-10');
+  }
 }

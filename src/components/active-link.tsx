@@ -1,27 +1,28 @@
-"use client";
-import { useSelectedLayoutSegment } from "next/navigation";
-import Link from "next/link";
+'use client';
+import { useSelectedLayoutSegment } from 'next/navigation';
+import Link from 'next/link';
+import { Route } from 'next';
 
 export default function ActiveLink({
- slug,
- children,
+  route,
+  children,
 }: {
- slug: string;
- children: React.ReactNode;
+  route: Route;
+  children: React.ReactNode;
 }) {
- const segment = useSelectedLayoutSegment() || "";
- const className =
-  segment === slug
-   ? "text-tw-secondary"
-   : "text-tw-black dark:text-tw-white transition-colors hover:text-tw-secondary focus-visible:text-tw-secondary";
+  const segment = useSelectedLayoutSegment() || '';
+  const className =
+    segment === route
+      ? 'text-tw-secondary'
+      : 'text-tw-black dark:text-tw-white transition-colors hover:text-tw-secondary focus-visible:text-tw-secondary';
 
- return (
-  <Link
-   className={`lowercase ${className}`}
-   aria-label={`go to ${slug}`}
-   href={`/${slug}`}
-  >
-   {children}
-  </Link>
- );
+  return (
+    <Link
+      className={`lowercase ${className}`}
+      aria-label={`go to ${route}`}
+      href={route}
+    >
+      {children}
+    </Link>
+  );
 }
