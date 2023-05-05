@@ -1,28 +1,31 @@
-import { getRepos } from "@lib/github";
+import { getRepos } from '@lib/github';
+import { MetadataRoute } from 'next';
 
-export default async function sitemap() {
- const routes = ["", "/projects", "/collab", "/contact"].map((route) => ({
-  url: `https://jacobbolden.com${route}`,
-  lastModified: new Date().toISOString().split("T")[0],
- }));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const routes: MetadataRoute.Sitemap = [
+    '',
+    '/projects',
+    '/collab',
+    '/contact',
+  ].map((route) => ({
+    url: `https://jacobbolden.com${route}`,
+    lastModified: new Date().toISOString().split('T')[0],
+  }));
 
- let projects: { url: string; lastModified: string }[] = [];
+  const projects: MetadataRoute.Sitemap = [];
 
- try {
-  const repos = await getRepos();
+  try {
+    const repos = await getRepos();
+    if (!repos) throw Error('No repos found');
+    repos.map((repo) => {
+      projects.push({
+        url: `https://jacobbolden.com/projects/${repo.name}`,
+        lastModified: repo.pushed_at,
+      });
+    });
+  } catch (error) {
+    console.error('SitemapReposError', error);
+  }
 
-  repos?.map((repo) => {
-   projects = [
-    ...projects,
-    {
-     url: `https://jacobbolden.com/projects/${repo.name}`,
-     lastModified: repo.pushed_at,
-    },
-   ];
-  });
- } catch (error) {
-  console.error("Sitemap: Failed to get repos - ", error);
- }
-
- return [...routes, ...projects];
+  return [...routes, ...projects];
 }

@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
 type SearchParams = {
- searchParams: {
-  error: string;
- };
+  searchParams: {
+    error: string;
+  };
 };
 
 export const metadata: Metadata = {
- title: "Oops..",
+  title: 'Oops..',
 };
 
 export default function Page({ searchParams }: SearchParams) {
- return (
-  <>
-   <h1 className="text-2xl">Uh oh..</h1>
-   <p>Error: {searchParams.error}</p>
-  </>
- );
+  return (
+    <>
+      <h1 className="text-2xl">Uh oh..</h1>
+      <p>Error: {searchParams.error}</p>
+    </>
+  );
 }
