@@ -1,5 +1,6 @@
 # My Personal Website
 
+## Technologies
 - Deployment: [Vercel](https://vercel.com)
 - Analytics: [Vercel Analytics](https://vercel.com/analytics)
 - Framework: [Next.js](https://nextjs.org/)
