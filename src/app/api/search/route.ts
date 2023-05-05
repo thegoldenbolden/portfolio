@@ -11,8 +11,6 @@ export async function GET(request: NextRequest) {
 
   try {
     const session = await getUser();
-    console.log(session);
-
     if (!session?.access_token) {
       return NextResponse.json(
         { message: 'Invalid access token' },
