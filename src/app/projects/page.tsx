@@ -7,7 +7,7 @@ import { getRepos } from '@lib/github';
 
 const featured = {
   pokefolder: 1,
-  versus: 1,
+  orgame: 1,
 };
 
 export const metadata: Metadata = {

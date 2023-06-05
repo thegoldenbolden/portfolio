@@ -1,6 +1,10 @@
-const requestInit: RequestInit = {
-  headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
-  next: { revalidate: 86400 },
+const init: RequestInit = {
+  headers: {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+  },
+  next: {
+    revalidate: 86400,
+  },
 };
 
 type Repository = {
@@ -10,55 +14,43 @@ type Repository = {
   pushed_at: string;
   updated_at: string;
   created_at: string;
+  visibility: 'public' | 'private';
   homepage: string | null;
   forks_count: number;
   archived: boolean;
   topics: string[];
 };
 
-export const GITHUB_API = 'https://api.github.com';
-export const GITHUB_REPOS = `${GITHUB_API}/users/thegoldenbolden/repos?type=all&sort=pushed&direction=desc`;
-export const getGithubRepo = (repo: string) =>
-  `${GITHUB_API}/repos/thegoldenbolden/${repo}`;
+export const baseUrl = 'https://api.github.com';
 
 export async function getRepos(): Promise<Repository[] | null> {
-  try {
-    const response = await fetch(GITHUB_REPOS, requestInit);
-    if (!response.ok) throw response;
-    if (response.status > 299 || response.status < 200) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
-  } catch (error) {
-    console.error('GetReposError\n', error);
-    return null;
-  }
+  const url = new URL('/search/repositories', baseUrl);
+  url.searchParams.set('q', 'archived:false user:thegoldenbolden');
+  url.searchParams.set('sort', 'pushed');
+  url.searchParams.set('direction', 'desc');
+
+  const response = await fetch(url.href, init);
+  if (!response.ok) throw response;
+  const data = await response.json();
+  return data.items;
 }
 
 export async function getRepo(repo: string): Promise<Repository | null> {
-  try {
-    const response = await fetch(getGithubRepo(repo), requestInit);
-    if (!response.ok) throw response;
-    if (response.status > 299 || response.status < 200) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
-  } catch (error) {
-    console.error('GetRepoError\n', error);
-    return null;
-  }
+  const url = new URL(`/repos/thegoldenbolden/${repo}`, baseUrl);
+  url.searchParams.set('type', 'all');
+  url.searchParams.set('sort', 'updated');
+  url.searchParams.set('direction', 'desc');
+
+  const response = await fetch(url.href, init);
+  if (!response.ok) throw new Error('failed to fetch');
+  return response.json();
 }
 
-export async function getREADME(repo: string) {
-  try {
-    const response = await fetch(
-      `https://raw.githubusercontent.com/thegoldenbolden/${repo}/master/README.md`,
-      requestInit,
-    );
-    if (!response.ok) throw response;
-    return response.text();
-  } catch (error) {
-    console.error('READMEError\n', error);
-    return null;
-  }
+export async function getReadme(repo: string) {
+  const response = await fetch(
+    `https://raw.githubusercontent.com/thegoldenbolden/${repo}/master/README.md`,
+    init,
+  );
+  if (!response.ok) throw response;
+  return response.text();
 }
