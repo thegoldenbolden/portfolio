@@ -33,7 +33,9 @@ export default async function Page({ params }: Params) {
       <section className="space-y-4">
         {readme && <CustomMDX source={readme} />}
         <div className="flex flex-wrap items-center gap-2 lowercase">
-          <StyledLink href={repo.html_url}>source</StyledLink>
+          {repo.visibility === 'public' && (
+            <StyledLink href={repo.html_url}>source</StyledLink>
+          )}
           {repo.homepage && (
             <>
               <span>•</span>
@@ -55,31 +57,6 @@ export default async function Page({ params }: Params) {
           Created at <FormatDate date={repo.created_at} />
         </div>
       </section>
-      <p>{repo.description ?? 'No description available.'}</p>
-      <Divider />
-      {readme && <CustomMDX source={readme} />}
-      <div className="flex flex-wrap items-center gap-2 lowercase">
-        {repo.visibility === 'public' && (
-          <StyledLink href={repo.html_url}>source</StyledLink>
-        )}
-        {repo.homepage && (
-          <>
-            <span>•</span>
-            <StyledLink href={repo.homepage}>website</StyledLink>
-          </>
-        )}
-      </div>
-      {repo.topics.length === 0 ? null : (
-        <div className="flex flex-wrap gap-2 text-sm text-gray">
-          {repo.topics.map((topic) => (
-            <span key={topic}>{`#${topic}`}</span>
-          ))}
-        </div>
-      )}
-      <Divider />
-      <div className="text-sm text-tw-gray">
-        Created at <FormatDate date={repo.created_at} />
-      </div>
     </div>
   );
 }
