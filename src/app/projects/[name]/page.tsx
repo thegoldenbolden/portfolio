@@ -30,6 +30,31 @@ export default async function Page({ params }: Params) {
 
   return (
     <div className="mt-6 space-y-6">
+      <section className="space-y-4">
+        {readme && <CustomMDX source={readme} />}
+        <div className="flex flex-wrap items-center gap-2 lowercase">
+          <StyledLink href={repo.html_url}>source</StyledLink>
+          {repo.homepage && (
+            <>
+              <span>•</span>
+              <StyledLink href={repo.homepage}>website</StyledLink>
+            </>
+          )}
+        </div>
+      </section>
+      <Divider />
+      <section className="space-y-6">
+        {repo.topics.length === 0 ? null : (
+          <div className="flex flex-wrap gap-2 text-sm text-tw-gray">
+            {repo.topics.map((topic) => (
+              <span key={topic}>{`#${topic}`}</span>
+            ))}
+          </div>
+        )}
+        <div className="text-sm text-tw-gray">
+          Created at <FormatDate date={repo.created_at} />
+        </div>
+      </section>
       <p>{repo.description ?? 'No description available.'}</p>
       <Divider />
       {readme && <CustomMDX source={readme} />}
