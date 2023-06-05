@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: Params) {
 export const revalidate = 86400;
 export default async function Page({ params }: Params) {
   const repo = await getRepo(params.name);
-  
-		if (!repo?.name) {
+
+  if (!repo?.name) {
     notFound();
   }
 
@@ -34,7 +34,9 @@ export default async function Page({ params }: Params) {
       <Divider />
       {readme && <CustomMDX source={readme} />}
       <div className="flex flex-wrap items-center gap-2 lowercase">
-        <StyledLink href={repo.html_url}>source</StyledLink>
+        {repo.visibility === 'public' && (
+          <StyledLink href={repo.html_url}>source</StyledLink>
+        )}
         {repo.homepage && (
           <>
             <span>•</span>

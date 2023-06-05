@@ -14,6 +14,7 @@ type Repository = {
   pushed_at: string;
   updated_at: string;
   created_at: string;
+  visibility: 'public' | 'private';
   homepage: string | null;
   forks_count: number;
   archived: boolean;
