@@ -1,6 +1,6 @@
 import FormatDate from '@components/format-date';
 import StyledLink from '@components/link/styled';
-import { getREADME, getRepo } from '@lib/github';
+import { getReadme, getRepo } from '@lib/github';
 import CustomMDX from '@components/mdx/custom';
 import { notFound } from 'next/navigation';
 import Divider from '@components/divider';
@@ -21,11 +21,12 @@ export async function generateMetadata({ params }: Params) {
 export const revalidate = 86400;
 export default async function Page({ params }: Params) {
   const repo = await getRepo(params.name);
-  if (!repo?.name) {
-    return notFound();
+  
+		if (!repo?.name) {
+    notFound();
   }
 
-  const readme = await getREADME(repo.name);
+  const readme = await getReadme(repo.name);
 
   return (
     <div className="mt-6 space-y-6">
