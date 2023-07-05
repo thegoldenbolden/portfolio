@@ -1,9 +1,6 @@
 'use client';
 import { type FormEventHandler, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
-import { AnimatePresence } from 'framer-motion';
-const Toast = dynamic(() => import('@components/toast'));
 
 type Status = 'loading' | 'success' | 'error' | null;
 export default function Form() {
@@ -38,81 +35,89 @@ export default function Form() {
   };
 
   return (
-    <>
-      <form
-        style={{ opacity: isMutating ? 0.7 : 1 }}
-        onSubmit={handleSubmit}
-        className="mt-8 grid grid-cols-1 w-[480px] max-w-full sm:grid-cols-2 gap-2"
-      >
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            required={true}
-            name="name"
-            type="text"
-            autoComplete="off"
-            disabled={isMutating}
-            placeholder="John Doe"
-            className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            required={true}
-            name="email"
-            type="email"
-            disabled={isMutating}
-            placeholder="johndoe@gmail.com"
-            className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10"
-          />
-        </div>
-        <div className="flex flex-col gap-2 sm:col-span-2">
-          <label htmlFor="subject">Subject</label>
-          <input
-            id="subject"
-            name="subject"
-            required={true}
-            type="text"
-            autoComplete="off"
-            disabled={isMutating}
-            minLength={2}
-            placeholder="Subject"
-            className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10"
-          />
-        </div>
-        <div className="flex flex-col gap-2 sm:col-span-2">
-          <label htmlFor="message">Message</label>
-          <textarea
-            id="message"
-            required={true}
-            name="message"
-            minLength={2}
-            disabled={isMutating}
-            placeholder="Message"
-            className="hover:placeholder:text-tw-black focus-visible:placeholder:text-tw-black dark:hover:placeholder:text-tw-white dark:focus-visible:placeholder:text-tw-white rounded-md p-2 bg-tw-black/10 dark:bg-tw-white/10 min-h-[100px]"
-          />
-        </div>
-        <button
-          disabled={isMutating}
-          type="submit"
-          className="bg-tw-secondary w-full justify-self-end text-tw-black rounded-md px-3 py-2"
+    <form
+      style={{ opacity: isMutating ? 0.7 : 1 }}
+      onSubmit={handleSubmit}
+      className="grid grid-cols-2 gap-2"
+    >
+      <div className="flex flex-col col-span-full sm:col-span-1">
+        <label
+          className="text-sm text-card-foreground font-bold"
+          htmlFor="name"
         >
-          {isMutating ? 'Sending..' : 'Send message!'}
-        </button>
-      </form>
-      <AnimatePresence>
-        {(status === 'success' || status === 'error') && (
-          <Toast
-            status={status}
-            success="Thanks for messaging!"
-            error="Oh no.. an error.."
-            setStatus={setStatus}
-          />
-        )}
-      </AnimatePresence>
-    </>
+          Name
+        </label>
+        <input
+          id="name"
+          required={true}
+          name="name"
+          type="text"
+          autoComplete="off"
+          disabled={isMutating}
+          placeholder="LA"
+          className="p-2 h-full placeholder:text-card-foreground bg-transparent border rounded-md border-solid border-border outline-none focus-visible:border-[#006bff] transition-colors"
+        />
+      </div>
+      <div className="flex flex-col col-span-full sm:col-span-1">
+        <label
+          className="text-sm text-card-foreground font-bold"
+          htmlFor="email"
+        >
+          Email
+        </label>
+        <input
+          id="email"
+          required={true}
+          name="email"
+          type="email"
+          disabled={isMutating}
+          placeholder="la.yeah@gmail.com"
+          className="p-2 h-full placeholder:text-card-foreground bg-transparent border rounded-md border-solid border-border outline-none focus-visible:border-[#006bff] transition-colors"
+        />
+      </div>
+      <div className="flex flex-col col-span-full">
+        <label
+          className="text-sm text-card-foreground font-bold"
+          htmlFor="subject"
+        >
+          Subject
+        </label>
+        <input
+          id="subject"
+          name="subject"
+          required={true}
+          type="text"
+          autoComplete="off"
+          disabled={isMutating}
+          minLength={2}
+          placeholder="Subject"
+          className="p-2 h-full placeholder:text-card-foreground bg-transparent border rounded-md border-solid border-border outline-none focus-visible:border-[#006bff] transition-colors"
+        />
+      </div>
+      <div className="flex flex-col col-span-full">
+        <label
+          className="text-sm text-card-foreground font-bold"
+          htmlFor="message"
+        >
+          Message
+        </label>
+        <textarea
+          id="message"
+          required={true}
+          name="message"
+          minLength={2}
+          disabled={isMutating}
+          placeholder="Message"
+          className="p-2 h-full placeholder:text-card-foreground bg-transparent border rounded-md border-solid border-border outline-none focus-visible:border-[#006bff] transition-colors min-h-[100px] resize-none"
+        />
+      </div>
+      <button
+        disabled={isMutating}
+        type="submit"
+        className="bg-card text-card-foreground hover:bg-border border col-span-2 border-solid border-border w-full rounded-md px-3 py-2 outline-none focus-visible:border-[#006bff] transition-colors"
+      >
+        {isMutating ? 'sending..' : 'send message'}
+      </button>
+    </form>
   );
 }

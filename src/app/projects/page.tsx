@@ -1,14 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-
-import FormatDate from '@components/format-date';
-import { FlameIcon } from '@components/icons';
-import { getRepos } from '@lib/github';
-
-const featured = {
-  pokefolder: 1,
-  orgame: 1,
-};
+import { Cards, Projects } from 'app/page';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -17,40 +9,14 @@ export const metadata: Metadata = {
 
 export const revalidate = 86400;
 export default async function Page() {
-  const projects = await getRepos();
-
-  if (!projects?.[0]) {
-    return <main>No projects found.</main>;
-  }
-
-  const sortByFeatured = projects.sort((project) =>
-    featured[project.name.toLowerCase()] ? -1 : 1,
-  );
-
   return (
-    <ul className="flex flex-col mt-2 gap-2 pb-6">
-      {sortByFeatured.map((project) => {
-        const name = project.name.toLowerCase();
-        return (
-          <li key={project.name} className="flex flex-col gap-px">
-            <div className="flex flex-wrap gap-2 items-center">
-              <Link
-                href={`/projects/${project.name}`}
-                className="flex flex-col gap-2"
-              >
-                <span className="capitalize">{name.replaceAll('-', ' ')}</span>
-              </Link>
-              {featured[name] && (
-                <FlameIcon className="text-tw-secondary w-4 h-4" />
-              )}
-            </div>
-            <span className="text-sm text-tw-gray">
-              Updated at&nbsp;
-              <FormatDate date={project.pushed_at} />
-            </span>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="my-32">
+      <h1 className="font-bold text-2xl">Projects</h1>
+      <ul className="flex flex-col mt-2 gap-3 pb-6 grid grid-cols-gallery">
+        <Suspense fallback={<Cards count={6} />}>
+          <Projects />
+        </Suspense>
+      </ul>
+    </div>
   );
 }
