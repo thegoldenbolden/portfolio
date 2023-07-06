@@ -28,6 +28,10 @@ export const socials = {
     icon: TwitchIcon,
     href: 'https://twitch.tv/thegoldenbolden',
   },
+		linkedin: {
+			href: 'https://linkedin.com/in/jbolden9',
+			icon: null
+		}
 } as const;
 
 type Social = keyof typeof socials;
