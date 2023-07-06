@@ -3,8 +3,8 @@ declare namespace NodeJS {
     SENDGRID_KEY: string;
     SPOTIFY_CLIENT_ID: string;
     SPOTIFY_CLIENT_SECRET: string;
-    NEXTAUTH_SECRET: string;
-    NEXTAUTH_URL: string;
-    NEXT_PUBLIC_VERCEL_URL: string;
+    SPOTIFY_USER: string;
+    GITHUB_KEY: string;
+    NEXT_PUBLIC_APP_URL: string;
   }
 }
