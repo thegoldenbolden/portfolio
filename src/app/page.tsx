@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { Repository, getRepos } from '@lib/github';
 import { Suspense } from 'react';
 import Avatar from '@components/avatar';
-import Social from '@components/socials';
+import Social, { socials } from '@components/socials';
 import { getRecentlyListened } from '@lib/spotify';
 import Image from 'next/image';
 
@@ -19,7 +19,7 @@ export const revalidate = 3600;
 
 export default async function Page() {
   return (
-    <div className="my-6 md:my-32 flex flex-col gap-4">
+    <div className="my-6 md:my-32 flex flex-col gap-6 md:gap-12">
       <section id="about" className="flex flex-col gap-3">
         <h1 className="text-2xl font-bold">hey i'm jacob</h1>
         <div className="flex mt-6 flex-col gap-6">
@@ -27,6 +27,45 @@ export default async function Page() {
             I'm a self-taught developer focusing on creating user friendly web
             applications.
           </p>
+          <div className="flex flex-wrap gap-6 items-center">
+            <Avatar />
+            <div className="flex flex-col gap-2 text-card-foreground">
+              <a
+                href={socials.twitter.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group flex gap-2 flex-wrap hover:text-foreground focus-visible:text-foreground"
+              >
+                <span>follow on twitter</span>
+                <RightArrowIcon className="w-5 h-5 group-hover:motion-safe:animate-bounce-right group-focus-visible:motion-safe:animate-bounce-right" />
+              </a>
+              <a
+                href={socials.github.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group flex gap-2 flex-wrap hover:text-foreground focus-visible:text-foreground"
+              >
+                follow on github
+                <RightArrowIcon className="w-5 h-5 group-hover:motion-safe:animate-bounce-right group-focus-visible:motion-safe:animate-bounce-right" />
+              </a>
+              <a
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group flex gap-2 flex-wrap hover:text-foreground focus-visible:text-foreground"
+                href={socials.linkedin.href}
+              >
+                follow on linkedin
+                <RightArrowIcon className="w-5 h-5 group-hover:motion-safe:animate-bounce-right group-focus-visible:motion-safe:animate-bounce-right" />
+              </a>
+            </div>
+            <p className="max-w-screen-sm">
+              I am always looking for new opportunities to use my skills and
+              expand my knowledge in the tech industry. If you have a position
+              that could benefit from my experience and dedication, I would love
+              to hear from you and see how we can work together. I look forward
+              to hearing from you! 😀
+            </p>
+          </div>
         </div>
       </section>
       <section id="projects" className="flex flex-col gap-3">
@@ -40,7 +79,7 @@ export default async function Page() {
             className="group lowercase py-1.5 flex gap-2 items-center group"
           >
             <span>View more</span>
-            <RightArrowIcon className="w-4 h-4 group-hover:motion-safe:animate-bounce-right" />
+            <RightArrowIcon className="w-4 h-4 group-hover:motion-safe:animate-bounce-right group-hover:motion-safe:animate-bounce-right" />
           </Link>
         </div>
         <ul className="grid grid-cols-gallery gap-3">
@@ -49,12 +88,6 @@ export default async function Page() {
           </Suspense>
         </ul>
       </section>
-      <p className="max-w-screen-sm">
-        I am always looking for new opportunities to use my skills and expand my
-        knowledge in the tech industry. If you have a position that could
-        benefit from my experience and dedication, I would love to hear from you
-        and see how we can work together. I look forward to hearing from you! 😀
-      </p>
       <section className="flex flex-col gap-6">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <h2 className="flex flex-wrap gap-2 items-center text-2xl font-bold">
@@ -66,7 +99,7 @@ export default async function Page() {
             className="group lowercase py-1.5 flex gap-2 items-center group"
           >
             <span className="bg-background px-3">View resume</span>
-            <RightArrowIcon className="w-4 h-4 group-hover:motion-safe:animate-bounce-right" />
+            <RightArrowIcon className="w-4 h-4 group-hover:motion-safe:animate-bounce-right group-hover:motion-safe:animate-bounce-right" />
           </Link>
         </div>
         <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 md:gap-2">
