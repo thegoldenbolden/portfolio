@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="my-32">
-      <h1 className="font-bold text-2xl">🤙 talk to me</h1>
+    <div className="my-6 md:my-32">
+      <h1 className="font-bold text-2xl mb-8">🤙 talk to me</h1>
       <div className="flex flex-col gap-3 max-w-screen-xs">
         <div className="flex items-center gap-2">
           <Link
