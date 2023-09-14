@@ -1,7 +1,5 @@
-import { Analytics } from '@vercel/analytics/react';
-import ActiveLink from '@components/active-link';
-import { montserrat } from '@lib/fonts';
-import Avatar from '@components/avatar';
+import ActiveLink from '@/components/active-link';
+import { Nunito } from 'next/font/google';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -30,29 +28,35 @@ export const metadata: Metadata = {
   },
 };
 
+export const font = Nunito({
+  variable: '--font-body',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={montserrat.variable}>
-      <body className="bg-background text-foreground font-montserrat">
-        <main className="max-w-screen-lg mx-auto px-3 grid grid-cols-1 md:grid-cols-[100px_1fr] md:gap-16">
-          <aside>
-            <nav className="flex flex-row md:flex-col py-12 gap-6 sticky top-0 px-3">
-              <div className="flex justify-end">
-                <Avatar className="w-12 h-12" />
-              </div>
-              <div className="flex flex-row md:flex-col items-end gap-2 lowercase">
-                <ActiveLink route="/" className="md:text-lg xl:text-xl">
-                  home
-                </ActiveLink>
-                <ActiveLink route="/projects" className="md:text-lg xl:text-xl">
-                  Projects
-                </ActiveLink>
-              </div>
+    <html lang="en" className={`${font.variable}`}>
+      <body className="bg-background font-body leading-8 text-foreground">
+        <div className="mx-auto flex max-w-screen-sm flex-col gap-8 px-4 lg:px-0">
+          <header className="flex flex-col gap-4">
+            <nav>
+              <ul className="flex flex-wrap items-center gap-4 py-2">
+                <li>
+                  <ActiveLink href="/">Home</ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink href="/projects">Projects</ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink href="/resume">Resume</ActiveLink>
+                </li>
+              </ul>
             </nav>
-          </aside>
-          {props.children}
-        </main>
-        <Analytics />
+          </header>
+          <main className="flex flex-col gap-8 py-8">{props.children}</main>
+        </div>
       </body>
     </html>
   );

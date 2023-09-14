@@ -5,12 +5,8 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      screens: {
-        xs: '480px',
-        ...screens,
-      },
       fontFamily: {
-        montserrat: 'var(--font-montserrat)',
+        body: 'var(--font-body)',
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -26,9 +22,6 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-      },
-      gridTemplateColumns: {
-        gallery: 'repeat(auto-fit, minmax(250px, 1fr))',
       },
       animation: {
         'bounce-right': 'bounce-right 1s infinite',
