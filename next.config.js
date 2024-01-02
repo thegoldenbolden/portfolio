@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: 'i.scdn.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.jacobbolden.com',
+        pathname: '/**'
+      }
     ],
   },
 };

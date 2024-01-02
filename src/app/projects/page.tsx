@@ -1,115 +1,55 @@
-import { ExternalLinkIcon, GithubIcon } from '@/components/icons';
+import { RightArrowIcon } from '@/components/icons';
+import { Project } from '@/components/project-card';
+import { projects } from '@/utils';
 import type { Metadata } from 'next';
-import { cache } from 'react';
-
-const init: RequestInit = {
-  headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
-  next: { revalidate: 86400 },
-};
-
-type Repository = {
-  name: string;
-  html_url: string;
-  visibility: 'public' | 'private';
-  homepage: string | null;
-  description: string | null;
-  pushed_at?: string;
-  updated_at?: string;
-  created_at?: string;
-  forks_count?: number;
-  archived?: boolean;
-  topics?: string[];
-  image?: {
-    src: string;
-    alt: string;
-    height: number;
-    width: number;
-  };
-};
-
-const baseUrl = 'https://api.github.com';
-
-const getRepos = cache(async function getRepos(): Promise<Repository[]> {
-  const url = new URL('/search/repositories', baseUrl);
-  url.searchParams.set('q', 'archived:false is:public user:thegoldenbolden');
-  url.searchParams.set('sort', 'pushed');
-  url.searchParams.set('direction', 'desc');
-
-  const response = await fetch(url.href, init);
-  if (!response.ok) throw response;
-  const data = await response.json();
-  return data.items ?? [];
-});
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Projects',
   description: "A list of projects I've worked on",
+  alternates: {
+    canonical: 'https://jacobbolden.com/projects',
+  },
 };
 
-export const revalidate = 86400;
 export default async function Page() {
-  return (
-    <>
-      <h1 className="mb-8 text-2xl font-bold">Projects</h1>
-      <ul className="grid min-h-[75vh] grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-        <Repos />
-      </ul>
-    </>
-  );
-}
-
-async function Repos() {
-  const repos = await getRepos();
+  const now = projects.filter((p) => p.status === 'now');
+  const past = projects.filter((p) => p.status === 'past');
 
   return (
-    <>
-      {repos
-        .filter((r) => r.name !== 'thegoldenbolden')
-        .map((repo) => (
-          <li className="group flex flex-col gap-2 rounded-md border border-solid border-border bg-card px-3 py-4 transition-all hover:-translate-y-2">
-            <h3 className="text-xl font-bold capitalize text-foreground">
-              {repo.name}
-            </h3>
-            <p className="grow text-base text-card-foreground">
-              {repo.description ?? 'No description available'}
-            </p>
-            <div className="flex items-center justify-end gap-4">
-              {repo.homepage && (
-                <a
-                  href={repo.homepage}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-card-foreground transition-colors hover:text-primary focus-visible:text-primary"
-                >
-                  <ExternalLinkIcon className="h-5 w-5" />
-                </a>
-              )}
-              {repo.visibility === 'public' && repo.html_url && (
-                <a
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-card-foreground transition-colors hover:text-primary focus-visible:text-primary"
-                >
-                  <GithubIcon className="h-5 w-5" />
-                </a>
-              )}
-            </div>
-          </li>
-        ))}
-    </>
-  );
-}
+    <main className="my-24 px-3 xl:px-0">
+      <div className="flex flex-wrap items-center gap-2 text-sm font-medium uppercase tracking-wide text-foreground/75">
+        <Link
+          href="/"
+          className="hover:text-foreground focus-visible:text-foreground"
+        >
+          Jacob Bolden
+        </Link>
+        <RightArrowIcon className="size-4" />
+        <h1 className="text-foreground">Projects</h1>
+      </div>
+      <section className="my-12 flex flex-col gap-4">
+        <h2 className="sticky top-0 z-50 py-4 text-sm font-medium uppercase tracking-wider text-foreground/75 backdrop-blur-sm">
+          Now
+        </h2>
 
-function Fallback() {
-  return (
-    <>
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div
-          key={`repo-fallback-${i}`}
-          className="h-32 w-full bg-card motion-safe:animate-pulse"
-        />
-      ))}
-    </>
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+          {now.map((project) => {
+            return <Project key={project.name} project={project} />;
+          })}
+        </ul>
+      </section>
+      <section className="my-12 flex flex-col gap-4">
+        <h2 className="sticky top-0 z-50 py-4 text-sm font-medium uppercase tracking-wider text-foreground/75 backdrop-blur-sm">
+          Past
+        </h2>
+
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+          {past.map((project) => {
+            return <Project key={project.name} project={project} />;
+          })}
+        </ul>
+      </section>
+    </main>
   );
 }

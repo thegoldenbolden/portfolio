@@ -2,41 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 30 33% 5%;
-    --border: 0 0% 90.3%;
+    scroll-behavior: smooth;
+    --spotlight: 138 100% 10%;
 
-    --card: 353 10% 93%;
-    --card-foreground: 26 5% 27%;
+    --background: 138 100% 5%;
+    --foreground: 240 100% 98.6%;
 
-    --primary: 39.66 100% 76.86%;
-    --primary-foreground: 39.66 100% 76.86%;
+    --primary: 138 50% 50%;
+    --primary-foreground: 340 76% 100%;
 
-    --ring: var(--primary);
-    --input: var(--accent);
+    --accent: 138 100% 80%;
+    --accent-foreground: 138 100% 20%;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: 0 0% 0%;
-      --foreground: 240 100% 98.6%;
-
-      --border: 242 4.9% 16.5%;
-
-      --card: 60 3% 6.5%;
-      --card-foreground: 240 4% 75.5%;
-
-      --primary: 39.66 100% 76.86%;
-      --primary-foreground: 39.66 100% 76.86%;
-    }
-  }
-}
-
-@layer base {
-  :disabled {
-    cursor: not-allowed;
+  :focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: hsl(var(--accent));
   }
 
   button {
