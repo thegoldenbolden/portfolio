@@ -5,16 +5,16 @@
 @layer base {
   :root {
     scroll-behavior: smooth;
-    --spotlight: 138 100% 10%;
+    --spotlight: 0 100% 10%;
 
-    --background: 138 100% 5%;
-    --foreground: 240 100% 98.6%;
+    --background: 0 100% 5%;
+    --foreground: 0 100% 98.6%;
 
-    --primary: 138 50% 50%;
-    --primary-foreground: 340 76% 100%;
+    --primary: 0 50% 50%;
+    --primary-foreground: 0 76% 100%;
 
-    --accent: 138 100% 80%;
-    --accent-foreground: 138 100% 20%;
+    --accent: 0 100% 80%;
+    --accent-foreground: 0 100% 20%;
   }
 
   :focus-visible {

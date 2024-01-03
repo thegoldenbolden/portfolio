@@ -1,6 +1,7 @@
 import { GeistSans as font } from 'geist/font/sans';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { Analytics } from "@vercel/analytics/react"
 import { Spotlight } from '~/hooks/spotlight';
 import './globals.css';
 
@@ -36,6 +37,7 @@ export default function RootLayout(
       <body className="select:text-primary-foreground bg-background leading-8 text-foreground selection:bg-primary">
         <div className="mx-auto max-w-screen-lg">
           {props.children}
+          <Analytics />
           <Suspense>
             <Spotlight />
           </Suspense>

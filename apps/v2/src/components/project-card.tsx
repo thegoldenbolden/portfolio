@@ -48,7 +48,7 @@ function SiteLink({
       aria-labelledby={name}
       className="absolute left-0 top-0 h-full w-full rounded-inherit"
     >
-      <span className="sr-only">open a new tab to {site}</span>
+      <span className="sr-only">{site}</span>
     </a>
   );
 }
