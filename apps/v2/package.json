@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "@repo/utils": "workspace:*",
     "@vercel/analytics": "^1.1.1",
     "clsx": "^2.1.0",
     "geist": "^1.2.0",

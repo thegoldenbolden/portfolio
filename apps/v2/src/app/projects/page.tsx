@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { RightArrowIcon } from '~/components/icons';
+import { RightArrowIcon } from '@repo/ui/icons'
+import { projects } from '@repo/utils';
 import { Project } from '~/components/project-card';
-import { projects } from '~/utils';
 
 export const metadata: Metadata = {
   title: 'Projects',

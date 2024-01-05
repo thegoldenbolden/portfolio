@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
-import type { Project as TProject } from '~/utils';
-import { LinkIcon as LinkSVG } from './icons';
+import type { Project as TProject } from '@repo/utils';
+import { LinkIcon as LinkSVG } from '@repo/ui/icons';
 
 type Props = {
   as?: 'li' | 'div';

@@ -4,25 +4,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Project } from '~/components/project-card';
 import { Observer } from '~/hooks/observer';
-import { projects } from '~/utils';
+import { projects, socials } from '@repo/utils';
 import {
   GithubIcon,
   LinkedinIcon,
   SpotifyIcon,
   XIcon,
-} from '~/components/icons';
+} from '@repo/ui/icons';
 
 export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-};
-
-const socials = {
-  x: 'https://x.com/thagoldenbolden',
-  github: 'https://github.com/thegoldenbolden',
-  spotify: 'https://open.spotify.com/user/thegoldenbolden',
-  linkedin: 'https://linkedin.com/in/jbolden9',
 };
 
 export default function Page(): React.ReactNode {
