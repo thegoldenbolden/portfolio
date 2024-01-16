@@ -12,7 +12,7 @@ export function Project({
   as: Component = 'li',
 }: Props): React.ReactNode {
   return (
-    <Component className="group relative flex grow flex-col gap-2 rounded-xl border border-primary p-6 shadow-2xl shadow-primary transition-all">
+    <Component className="group relative flex grow flex-col gap-2 rounded-xl border border-primary p-6 shadow-2xl shadow-primary/25 transition-all">
       <Year year={project.year} />
       <SiteLink site={project.site} name={project.name} />
       <Heading name={project.name} site={project.site} />
@@ -61,10 +61,10 @@ function LinkIcon({ site }: { site?: string }): React.ReactNode {
       className="-z-[1] ml-auto rounded-full border border-primary p-2 transition-all 
   group-hover:scale-105 group-hover:border-primary 
   group-hover:bg-primary group-hover:text-primary-foreground 
-  group-hover:shadow-xl group-hover:shadow-primary 
+  group-hover:shadow-xl group-hover:shadow-primary/25 
   group-has-[a:focus-visible]:scale-105 group-has-[a:focus-visible]:border-accent 
   group-has-[a:focus-visible]:bg-accent group-has-[a:focus-visible]:text-accent-foreground 
-  group-has-[a:focus-visible]:shadow-xl group-has-[a:focus-visible]:shadow-accent"
+  group-has-[a:focus-visible]:shadow-xl group-has-[a:focus-visible]:shadow-accent/25"
     >
       <LinkSVG className="size-4" />
     </span>

@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Project } from '~/components/project-card';
-import { Observer } from '~/hooks/observer';
 import { projects, socials } from '@repo/utils';
 import {
   GithubIcon,
@@ -11,6 +9,8 @@ import {
   SpotifyIcon,
   XIcon,
 } from '@repo/ui/icons';
+import { Project } from '~/components/project-card';
+import { Observer } from '~/hooks/observer';
 
 export const metadata: Metadata = {
   alternates: {

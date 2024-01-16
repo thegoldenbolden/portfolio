@@ -1,8 +1,6 @@
 import { GeistSans as font } from 'geist/font/sans';
-import type { Metadata } from 'next';
-import { Suspense } from 'react';
 import { Analytics } from "@vercel/analytics/react"
-import { Spotlight } from '~/hooks/spotlight';
+import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -38,9 +36,6 @@ export default function RootLayout(
         <div className="mx-auto max-w-screen-lg">
           {props.children}
           <Analytics />
-          <Suspense>
-            <Spotlight />
-          </Suspense>
         </div>
       </body>
     </html>
