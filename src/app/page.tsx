@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { projects, socials } from '~/utils';
@@ -10,7 +9,6 @@ import {
   XIcon,
 } from '~/components/icons';
 import { Project } from '~/components/project-card';
-import { Observer } from '~/hooks/observer';
 
 export const metadata: Metadata = {
   alternates: {
